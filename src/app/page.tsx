@@ -8,6 +8,7 @@ import Search from "./search";
 export default function Home() {
   const [advocates, setAdvocates] = useState([]);
   const [filteredAdvocates, setFilteredAdvocates] = useState([]);
+  const [searchTerm, setSearchTerm] = useState<string>('');
 
   useEffect(() => {
     console.log("fetching advocates...");
@@ -22,8 +23,6 @@ export default function Home() {
   const handleSearchInputChange = (e) => {
     const searchTerm = e.target.value;
 
-    document.getElementById("search-term").innerHTML = searchTerm;
-
     console.log("filtering advocates...");
     const filteredAdvocates = advocates.filter((advocate) => {
       return (
@@ -36,6 +35,7 @@ export default function Home() {
       );
     });
 
+    setSearchTerm(searchTerm);
     setFilteredAdvocates(filteredAdvocates);
   };
 
@@ -47,7 +47,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <Search handleInputChange={handleSearchInputChange} handleReset={handleReset} />
+      <Search handleInputChange={handleSearchInputChange} handleReset={handleReset} searchTerm={searchTerm} />
       <Advocates filteredAdvocates={filteredAdvocates} />
     </>
   );
