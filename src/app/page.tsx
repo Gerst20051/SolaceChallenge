@@ -37,7 +37,13 @@ export default function Home() {
   return (
     <>
       <Header setSearchTerm={setSearchTerm} />
-      <Advocates filteredAdvocates={filteredAdvocates} />
+      {advocates.length ? (
+        <Advocates filteredAdvocates={filteredAdvocates} />
+      ) : (
+        <div className="m-5 text-center">
+          Loading...
+        </div>
+      )}
     </>
   );
 }
