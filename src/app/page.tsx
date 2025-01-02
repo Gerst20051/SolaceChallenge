@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import Advocates from "./advocates";
 import Header from "./header";
-import Search from "./search";
 
 export default function Home() {
   const [advocates, setAdvocates] = useState([]);
@@ -20,9 +19,7 @@ export default function Home() {
     });
   }, []);
 
-  const handleSearchInputChange = (e) => {
-    const searchTerm = e.target.value;
-
+  useEffect(() => {
     console.log("filtering advocates...");
     const filteredAdvocates = advocates.filter((advocate) => {
       return (
@@ -34,20 +31,12 @@ export default function Home() {
         advocate.yearsOfExperience == searchTerm
       );
     });
-
-    setSearchTerm(searchTerm);
     setFilteredAdvocates(filteredAdvocates);
-  };
-
-  const handleReset = () => {
-    console.log(advocates);
-    setFilteredAdvocates(advocates);
-  };
+  }, [searchTerm]);
 
   return (
     <>
-      <Header />
-      <Search handleInputChange={handleSearchInputChange} handleReset={handleReset} searchTerm={searchTerm} />
+      <Header setSearchTerm={setSearchTerm} />
       <Advocates filteredAdvocates={filteredAdvocates} />
     </>
   );
